@@ -1,9 +1,90 @@
 - table:
     schema: public
-    name: comment
-- table:
-    schema: public
     name: post
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      set:
+        user_id: x-hasura-User-Id
+      columns:
+      - content
+      - title
+      backend_only: false
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - content
+      - id
+      - user_id
+      - title
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - content
+      - id
+      - user_id
+      - title
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - content
+      - title
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: user
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        id:
+          _eq: X-Hasura-User-Id
+      set:
+        id: x-hasura-User-Id
+      columns:
+      - name
+      backend_only: false
+  select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - id
+      - name
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - name
+      - id
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - name
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
