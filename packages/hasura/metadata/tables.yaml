@@ -1,0 +1,9 @@
+- table:
+    schema: public
+    name: comment
+- table:
+    schema: public
+    name: post
+- table:
+    schema: public
+    name: user
