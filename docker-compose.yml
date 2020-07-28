@@ -28,5 +28,28 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       ## uncomment next line to set an admin secret
       HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
+
+  schemaspy:
+    image: schemaspy/schemaspy
+    command:
+      [
+        "-t",
+        "pgsql",
+        "-host",
+        "postgres:5432",
+        "-u",
+        "postgres",
+        "-p",
+        "postgrespassword",
+        "-db",
+        "postgres",
+        "-s",
+        "public",
+      ]
+    volumes:
+      - ./schemaspy:/output
+    depends_on:
+      - postgres
+      - hasura
 volumes:
   db_data:
